@@ -15,11 +15,22 @@ const io = new Server(server, {
 
 app.use(cors({ origin: ORIGIN }));
 
-io.on("connection", (socket) => {
+const fetchData = async () => {
+  const response = await fetch(
+    "https://data--us-east.upscope.io/status?stats=1"
+  );
+  const data = await response.json();
+  console.log("data ->", data);
+  return data;
+};
+
+io.on("connection", async (socket) => {
   console.log("a user connected");
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
+  const data = await fetchData()
+  io.emit("endpoint", data);
 });
 
 server.listen(PORT, () => {
