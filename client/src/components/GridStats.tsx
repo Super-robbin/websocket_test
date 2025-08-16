@@ -12,7 +12,7 @@ const GridStats = ({ data }: GridStatsProps) => {
   const io = getWorker(data, "io");
 
   return (
-    <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
+    <div data-testid="gridStats" className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
       <StatItem label="Servers" value={servers_count} />
       <StatItem label="Online Users" value={online.toLocaleString()} />
       <StatItem label="Active Sessions" value={session.toLocaleString()} />

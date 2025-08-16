@@ -9,7 +9,7 @@ const Services = ({ data }: ServicesProps) => {
   const { services } = data.results;
 
   return (
-    <div className="mt-5">
+    <div data-testid="services" className="mt-5">
       <div className="mb-2 text-xs uppercase tracking-wide text-black/60">
         Services
       </div>

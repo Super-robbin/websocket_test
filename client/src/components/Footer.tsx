@@ -6,7 +6,7 @@ interface FooterProps {
 
 const Footer = ({ data }: FooterProps) => {
   return (
-    <div className="mt-6 flex items-center justify-between text-xs text-black/60">
+    <div data-testid="footer" className="mt-6 flex items-center justify-between text-xs text-black/60">
       <div>
         Roles:{" "}
         <span className="font-medium text-black/85">

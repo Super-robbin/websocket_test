@@ -11,7 +11,7 @@ const Header = ({ data }: HeaderProps) => {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3">
+      <div data-testid="header" className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
           <Indicator ok={status === "ok"} title={`Status: ${status}`} />
           <h2 className="text-lg font-semibold">Cluster Status</h2>
