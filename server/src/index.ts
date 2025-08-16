@@ -29,7 +29,7 @@ io.on("connection", async (socket) => {
     } catch (error: any) {
       console.error("Error fetching data:", error.message);
       clearInterval(interval);
-      socket.emit("error", { message: error.message });
+      socket.emit("error", error.message);
     }
   }, 1000);
 

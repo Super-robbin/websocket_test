@@ -17,7 +17,7 @@ function App() {
 
     const onError = (error: string) => {
       console.log(error);
-      setErrorMessage(error.message);
+      setErrorMessage(error);
     };
 
     socket.on(region, onListen);
