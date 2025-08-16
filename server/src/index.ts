@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+import { REGIONS } from "./data/regions";
+import { fetchData } from "./utils/fetchData";
 
 const PORT = Number(process.env.PORT) || 8080;
 const ORIGIN = process.env.ORIGIN || "*";
@@ -15,22 +17,26 @@ const io = new Server(server, {
 
 app.use(cors({ origin: ORIGIN }));
 
-const fetchData = async () => {
-  const response = await fetch(
-    "https://data--us-east.upscope.io/status?stats=1"
-  );
-  const data = await response.json();
-  console.log("data ->", data);
-  return data;
-};
-
 io.on("connection", async (socket) => {
   console.log("a user connected");
+
+  const interval = setInterval(async () => {
+    try {
+      for (const region of REGIONS) {
+        const data = await fetchData(region);
+        socket.emit(region, data);
+      }
+    } catch (error: any) {
+      console.error("Error fetching data:", error.message);
+      clearInterval(interval);
+      socket.emit("error", { message: error.message });
+    }
+  }, 1000);
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
+    clearInterval(interval);
   });
-  const data = await fetchData()
-  io.emit("endpoint", data);
 });
 
 server.listen(PORT, () => {
