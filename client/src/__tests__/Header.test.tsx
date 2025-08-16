@@ -1,14 +1,51 @@
 import { render, screen } from "@testing-library/react";
 import Header from "@components/Header";
-import type { ServerStatus } from "../types";
+import type { ServerStatus, WorkerMetrics } from "../types";
 
 describe("<Header />", () => {
-  const baseData: ServerStatus = {
-    status: "ok",
-    region: "us-east-1",
-    version: "1.2.3",
-    server_issue: null,
-  };
+  const mkWorker = (over: Partial<WorkerMetrics> = {}): WorkerMetrics => ({
+  wait_time: 0,
+  workers: 0,
+  waiting: 0,
+  idle: 0,
+  time_to_return: 0,
+  recently_blocked_keys: [],
+  top_keys: [],
+  ...over,
+});
+
+const baseData: ServerStatus = {
+  status: "ok",
+  region: "us-east-1",
+  version: "1.2.3",
+  server_issue: null,
+  roles: [],
+  strict: false,
+  results: {
+    services: {
+      redis: true,
+      database: true,
+    },
+    stats: {
+      servers_count: 1,
+      online: 1,
+      session: 1,
+      server: {
+        cpus: 1,
+        active_connections: 1,
+        wait_time: 0,
+        cpu_load: 0.1,
+        timers: 1,
+        workers: [
+          ["requests:pageviews", mkWorker()],
+          ["io", mkWorker()],
+          ["requests:unsupported-users", mkWorker()],
+          ["recording-workers", mkWorker()],
+        ],
+      },
+    },
+  },
+};
 
   test("Render cluster status title and indicator", () => {
     render(<Header data={baseData} />);
