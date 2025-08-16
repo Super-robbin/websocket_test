@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-      <header className="flex justify-center items-center gap-x-12 p-7 w-full bg-gradient-to-r from-[#E081FA] to-[#8D5AF5]">
+      <header className="flex flex-wrap gap-6 justify-center items-center gap-x-12 p-7 w-full bg-gradient-to-r from-[#E081FA] to-[#8D5AF5]">
         <p className="text-7xl text-white">Upscope</p>
 
         <select
